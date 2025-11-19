@@ -20,4 +20,14 @@ def filter_missing_values(df):
     else:
         print(missing_values)
 
+
+def list_unique_values(df):
+    column_names = list(df)
+
+    for col in column_names:
+        print("\n")
+        print (col)
+        print(df[col].unique())
+
 filter_missing_values(sales)
+list_unique_values(sales)
