@@ -7,8 +7,6 @@ script_dir = os.path.dirname(__file__)
 rel_path = "challenge_material"
 
 
-
-
 sales = pd.read_csv(os.path.join(script_dir, rel_path, "customers_sales.csv"))
 print(sales)
 sales_null_values = sales.isnull()
