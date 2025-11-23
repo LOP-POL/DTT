@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
 import os
+import re
 
 script_dir = os.path.dirname(__file__)
 rel_path = "challenge_material"
@@ -34,8 +35,27 @@ def list_duplicate_values(df):
     print(duplicate_indices)
     print(df.loc[duplicate_indices])
 
+def list_unused_drawings(df):
+    used_drawings = set()
+
+    for file_name in df["file_name"].astype(str):
+        found_digits = re.findall(r'\d+', file_name)
+        for digit_str in found_digits:
+            used_drawings.add(int(digit_str))
+
+    all_expected_drawings = set(range(1, 81))
+
+    unused_drawings = sorted(list(all_expected_drawings - used_drawings))
+
+    print(f"Total Unique Drawings Found: {len(used_drawings)}")
+    print(f"Expected Range: 1 to 80")
+    print("-" * 30)
+    print(f"The following file numbers are unused (missing from the column):")
+    print(unused_drawings)
+    print("-" * 30)
 
 
-filter_missing_values(sales)
-list_unique_values(sales)
-list_duplicate_values(sales)
+list_unused_drawings(sales)
+
+print(sales.dtypes)
+print(sales.describe(include='all'))
