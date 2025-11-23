@@ -29,5 +29,15 @@ def list_unique_values(df):
         print (col)
         print(df[col].unique())
 
+def list_duplicate_values(df):
+    duplicates = df.duplicated()
+    duplicate_indices = list(duplicates[duplicates].index)
+    print("\nDuplicate rows at indices: ")
+    print(duplicate_indices)
+    print(df.loc[duplicate_indices])
+
+
+
 filter_missing_values(sales)
 list_unique_values(sales)
+list_duplicate_values(sales)
