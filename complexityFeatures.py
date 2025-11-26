@@ -12,11 +12,14 @@ bounding_box_areas = []
 bounding_box_heights = []
 bounding_box_widths = []
 cutting_lengths = []
+number_of_holes = []
 
+path = "challenge_material/10991360/"
 
 for i in working_sales["file_name"]:
-    bounding_box = get_dxf_bounds("challenge_material/10991360/" + i)
-    c_length = get_cutting_length("challenge_material/10991360/" + i)
+    bounding_box = get_dxf_bounds(path + i)
+    c_length = get_cutting_length(path + i)
+    n_holes = get_number_of_holes(path + i)
     
 
     box_height = bounding_box[0]
@@ -29,16 +32,18 @@ for i in working_sales["file_name"]:
     bounding_box_heights.append(box_height)
     bounding_box_list.append(bounding_box)
     cutting_lengths.append(c_length)
+    number_of_holes.append(n_holes)
 
-print(bounding_box_list)
-print(len(working_sales))
+# print(bounding_box_list)
+# print(len(working_sales))
 
 
 new_columns = {
     "bounding_box_heights":bounding_box_heights,
     "bounding_box_widths":bounding_box_widths,
     "bounding_box_area":bounding_box_areas,
-    "cutting_lengths":cutting_lengths
+    "cutting_lengths":cutting_lengths,
+    "number_of_holes":number_of_holes,
 }
 
 def insertIntoDf(df,new_col,rows):
@@ -59,13 +64,13 @@ complexity_df["file_name"] = working_sales["file_name"]
 
 complexity_df[['bounding_box_heights','bounding_box_widths']].plot.box()
 
-complexity_df['bounding_box_area'].plot.box()
+# complexity_df['bounding_box_area'].plot.box()
 
 
-plt.show()
+# plt.show()
 
-# complexity_df.info()
-# working_sales.info()
+print(complexity_df)
+
 
 
 
