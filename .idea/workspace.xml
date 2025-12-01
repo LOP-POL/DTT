@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="52f8def1-fc9b-4ad4-91fa-79e1b1fd2fe6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/challenge_material/getting_started.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/challenge_material/getting_started.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/challenge_material/helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/challenge_material/helper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataCleanUp.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dataCleanupJP.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/dataCleanupJP.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -39,7 +37,7 @@
     "Python.helper.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "LOP",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/Sc/Documents/GitHub/DTT",
     "node.js.detected.package.eslint": "true",
