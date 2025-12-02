@@ -7,8 +7,6 @@ script_dir = os.path.dirname(__file__)
 rel_path = "challenge_material"
 
 
-# munich, berlin, stuttgart, hamburg, frankfurt
-
 
 sales = pd.read_csv(os.path.join(script_dir, rel_path, "customers_sales.csv"))
 print(sales)
@@ -69,3 +67,5 @@ print(sales.describe(include='all'))
 
 
 list_unused_drawings(sales)
+
+list_duplicate_values(sales)
