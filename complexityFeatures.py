@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from challenge_material.helper import *
 import seaborn as sns
+# import openpyxl
 
 
 working_sales = df
@@ -51,7 +52,7 @@ def complexityMeasure(cutting_lengths,number_of_edges,number_of_vertices,number_
         weight["holes"]*number_of_holes
         )
     areaPenalty = 1
-    if bounding_box_widths >160 and bounding_box_heights > 160:
+    if bounding_box_widths >160 or bounding_box_heights > 160:
         areaPenalty += 0.02
 
     score = round(math.log(rcl + area*areaPenalty),2)
@@ -122,7 +123,7 @@ print(complexity_df.describe())
 
 print(complexity_df.info())
 
-
+# complexity_df.to_excel("open")
 # # Plot bounding box area
 # plt.figure(figsize=(10, 6))
 # plt.plot(complexity_df["file_name"], complexity_df['bounding_box_area'], marker='o', linestyle='-', color='b')
