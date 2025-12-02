@@ -2,7 +2,7 @@ from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from dataCleanUpFinal import branchPerCustomer
+import dataCleanUpFinal as cleanup
 import os
 
 script_dir = os.path.dirname(__file__)
@@ -13,11 +13,13 @@ rel_path = "challenge_material"
 sales = pd.read_csv(os.path.join(script_dir, rel_path, "customers_sales.csv"))
 
 
-df = branchPerCustomer(sales)
-df = branchPerCustomer(sales).reset_index()
+
+#df = cleanup.branchPerCustomer(sales)
+
+df = cleanup.branchPerCustomer(cleanup.df).reset_index()
 df.columns = ["customer_name", "customer_branch", "orders"]
 
-
+print(df)
 
 branch_locations = {
     "Munich Branch": (48.1351, 11.5820),
@@ -70,3 +72,4 @@ for idx, row in df.iterrows():
     plt.text(x + 15000, y + 15000, label, fontsize=9, weight='bold')
 
 plt.show()
+print(df)
