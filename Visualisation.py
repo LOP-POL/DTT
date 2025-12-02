@@ -2,7 +2,7 @@ from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from dataCleanupJP import branchPerCustomer
+from dataCleanUpFinal import branchPerCustomer
 import os
 
 script_dir = os.path.dirname(__file__)
