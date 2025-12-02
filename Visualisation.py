@@ -1,18 +1,33 @@
 from mpl_toolkits.basemap import Basemap
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from dataCleanupJP import branchPerCustomer
+import os
 
-plt.figure(figsize=(8, 8))
+script_dir = os.path.dirname(__file__)
+rel_path = "challenge_material"
 
-coordinates = {
-    "Berlin": (52.52, 13.4050),
-    "Stuttgart": (48.7758, 9.1829),
-    "Munich": (48.1351, 11.5820),
-    "Hamburg": (53.5511, 9.9937),
-    "Frankfurt": (50.1109, 8.6821)
+
+
+sales = pd.read_csv(os.path.join(script_dir, rel_path, "customers_sales.csv"))
+
+
+df = branchPerCustomer(sales)
+df = branchPerCustomer(sales).reset_index()
+df.columns = ["customer_name", "customer_branch", "orders"]
+
+
+
+branch_locations = {
+    "Munich Branch": (48.1351, 11.5820),
+    "Berlin Branch": (52.5200, 13.4050),
+    "Frankfurt Branch": (50.1109, 8.6821),
+    "Stuttgart Branch": (48.7758, 9.1829),
+    "Hamburg Branch": (53.5511, 9.9937)
 }
 
-
+# Map stuff
 m = Basemap(
     projection='merc',
     llcrnrlat=47,
@@ -23,34 +38,35 @@ m = Basemap(
     resolution='i'
 )
 
-# Softer, modern colors
-land_color = "#f2efe9"        # warm light beige
-water_color = "#c7dcef"       # soft pastel blue
-border_color = "#555555"       # neutral dark gray
-state_line_color = "#888888"   # softer gray
+m.drawcoastlines(color='black')
+m.drawcountries(color='black')
+m.fillcontinents(color="#f2efe9", lake_color="#c7dcef")
+m.drawmapboundary(fill_color="#c7dcef")
 
-# Draw map
-m.drawmapboundary(fill_color=water_color)
-m.fillcontinents(color=land_color, lake_color=water_color)
+plt.title("Orders per Customer Branch", fontsize=14)
 
-m.drawcoastlines(color=border_color, linewidth=0.8)
-m.drawcountries(color=border_color, linewidth=1.0)
 
-# German state boundaries (if you loaded a shapefile)
-m.readshapefile('gadm41_DEU_1', 'germany_states', drawbounds=True)
-for shp in m.germany_states:
-     pass   # lines already drawn by drawbounds=True
+companies = df["customer_name"].tolist()
+colors = plt.cm.tab10(np.linspace(0, 1, len(companies)))
+color_map = dict(zip(companies, colors))
 
-# Parallels / meridians in subtle colors
-m.drawparallels(np.arange(47, 56, 1), labels=[1,0,0,0], color="#bbbbbb")
-m.drawmeridians(np.arange(5, 16, 1), labels=[0,0,0,1], color="#bbbbbb")
+#Plot each company
+for idx, row in df.iterrows():
+    customer = row["customer_name"]
+    branch = row["customer_branch"]
+    orders = row[df.columns[-1]]  # last column
 
-# --- Plot cities ---
-for city, (lat, lon) in coordinates.items():
-    x, y = m(lon, lat)  # convert lat/lon to map projection coordinates
-    m.plot(x, y, 'o', markersize=8, markeredgecolor='black')
-    plt.text(x + 10000, y + 10000, city, fontsize=9, fontweight='bold')  # small offset
+    if branch not in branch_locations:
+        continue
 
-plt.title("Location of Branches with Order Sizes", fontsize=14)
-plt.tight_layout()
+    lat, lon = branch_locations[branch]
+    x, y = m(lon, lat)
+
+    # Dot color
+    m.plot(x, y, 'o', markersize=12, color=color_map[customer], markeredgecolor='black')
+
+    # Label
+    label = f"{customer}\n({orders})"
+    plt.text(x + 15000, y + 15000, label, fontsize=9, weight='bold')
+
 plt.show()
