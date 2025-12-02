@@ -33,7 +33,7 @@ def add_missing(df, missing, customer_name, customer_branch, order_quantity):
 
     return pd.concat([df, new_rows], ignore_index=True)
 
-df = add_missing(df, missing, 'TechFab Industries', 'Hamburg Branch', '2000')
+df = add_missing(df, missing, 'TechFab Industries', 'Hamburg Branch', 2000)
 
 def branchPerCustomer(df):
     return df.groupby('customer_name')['customer_branch'].value_counts()
