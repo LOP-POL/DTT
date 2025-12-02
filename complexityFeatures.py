@@ -72,17 +72,17 @@ complexity_df["file_name"] = working_sales["file_name"]
 complexity_df[['bounding_box_heights','bounding_box_widths']].plot.box()
 
 # complexity_df['bounding_box_area'].plot.box()
-print(complexity_df)
-# Plot bounding box area
-plt.figure(figsize=(10, 6))
-plt.plot(complexity_df["file_name"], complexity_df['bounding_box_area'], marker='o', linestyle='-', color='b')
-plt.xlabel('file_name')
-plt.ylabel('Bounding Box Area')
-plt.title('Bounding Box Area per File')
-plt.xticks(rotation=90)  # Rotate file names for better readability
-plt.tight_layout()  # Adjust layout to make sure everything fits
-plt.show()
+# print(complexity_df)
+# # Plot bounding box area
+# plt.figure(figsize=(10, 6))
+# plt.plot(complexity_df["file_name"], complexity_df['bounding_box_area'], marker='o', linestyle='-', color='b')
+# plt.xlabel('file_name')
+# plt.ylabel('Bounding Box Area')
+# plt.title('Bounding Box Area per File')
+# plt.xticks(rotation=90)  # Rotate file names for better readability
+# plt.tight_layout()  # Adjust layout to make sure everything fits
 # plt.show()
+# # plt.show()
 
 
 
