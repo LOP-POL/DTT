@@ -130,9 +130,19 @@ print(complexity_df.info())
 # plt.ylabel('Bounding Box Area')
 # plt.title('Bounding Box Area per File')
 # plt.xticks(rotation=90)  # Rotate file names for better readability
-# plt.tight_layout()  # Adjust layout to make sure everything fits
+# plt.tight_layout()  # Adjust layout to make sure everything fits
 # plt.show()
 # # plt.show()
+
+def customer_complexity_table(df):
+    table = df.groupby(['customer_name', 'customer_branch'])['complexity_measure'].agg(
+        max_complexity='max',
+        min_complexity='min',
+        avg_complexity='mean',
+        count='count'
+    ).reset_index()
+
+    return table.sort_values('max_complexity', ascending=False)
 
 
 

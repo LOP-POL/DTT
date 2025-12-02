@@ -2,3 +2,5 @@ pandas
 matplotlib
 ezdxf
 shapely
+os
+math
