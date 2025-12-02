@@ -5,6 +5,8 @@ import re
 
 script_dir = os.path.dirname(__file__)
 rel_path = "challenge_material"
+
+
 # munich, berlin, stuttgart, hamburg, frankfurt
 
 
