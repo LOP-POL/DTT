@@ -1,5 +1,3 @@
-
-
 import os
 
 import pandas as pd
@@ -12,16 +10,15 @@ df = pd.read_csv(os.path.join(rel_path, "customers_sales.csv"))
 df['customer_name'] = df['customer_name'].replace('AutoPart AG', 'AutoParts AG')
 
 # Finding the missing values and adding them as TechFab Industries, Hamburg Branch, 2000
-def fix_missing(df):
+def find_missing(df):
     files = os.listdir('challenge_material\\10991360')
 
     existing_files = df['file_name'].dropna().unique()
     missing_files = [f for f in files if f not in existing_files]
 
-    print(f"Missing files: {len(missing_files)}")
     return missing_files
 
-missing = fix_missing(df)
+missing = find_missing(df)
 
 def add_missing(df, missing, customer_name, customer_branch, order_quantity):
     if len(missing) == 0:
@@ -36,7 +33,7 @@ def add_missing(df, missing, customer_name, customer_branch, order_quantity):
 
     return pd.concat([df, new_rows], ignore_index=True)
 
-df = add_missing(df, missing, 'TechFab Industries', 'Hamburg Branch', '2000')
+df = add_missing(df, missing, 'TechFab Industries', 'Hamburg Branch', 2000)
 
 def branchPerCustomer(df):
     return df.groupby('customer_name')['customer_branch'].value_counts()
