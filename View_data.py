@@ -5,6 +5,7 @@ import re
 
 script_dir = os.path.dirname(__file__)
 rel_path = "challenge_material"
+# munich, berlin, stuttgart, hamburg, frankfurt
 
 
 sales = pd.read_csv(os.path.join(script_dir, rel_path, "customers_sales.csv"))
@@ -54,8 +55,15 @@ def list_unused_drawings(df):
     print(unused_drawings)
     print("-" * 30)
 
+def sort_by_customers(df):
+    sorted_df = df.sort_values(by=["customer_name"], na_position='first')
+    print(sorted_df)
 
-list_unused_drawings(sales)
+
+sort_by_customers(sales)
 
 print(sales.dtypes)
 print(sales.describe(include='all'))
+
+
+list_unused_drawings(sales)

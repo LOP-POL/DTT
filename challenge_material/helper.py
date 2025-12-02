@@ -5,7 +5,6 @@ from shapely.geometry import Point, LineString, Polygon
 
 
 def get_dxf_bounds(path):
-    """Compute bounding box (width, height) for a DXF file."""
     try:
         doc = ezdxf.readfile(path)
         msp = doc.modelspace()
@@ -56,7 +55,6 @@ def get_dxf_bounds(path):
 
 
 def get_cutting_length(path):
-    """Compute the total cutting length of all entities in a DXF file."""
     try:
         doc = ezdxf.readfile(path)
     except ezdxf.DXFError:
@@ -106,16 +104,6 @@ def get_cutting_length(path):
 
 
 def get_number_of_holes(path, area_tolerance=1e-3):
-    """
-    Estimate the number of holes (internal cutouts) in a DXF file.
-
-    Args:
-        path (str): DXF file path.
-        area_tolerance (float): small threshold to ignore degenerate loops.
-
-    Returns:
-        int: Number of detected holes.
-    """
     try:
         doc = ezdxf.readfile(path)
         msp = doc.modelspace()
@@ -160,9 +148,54 @@ def get_number_of_holes(path, area_tolerance=1e-3):
         print(f"Error reading {path}: {ex}")
         return 0
 
+def count_edges_and_vertices(path):
+    doc = ezdxf.readfile(path)
+    msp = doc.modelspace()
+    total_edges = 0
+    total_vertices = 0
+
+    for e in msp:
+        try:
+            etype = e.dxftype()
+
+            if etype == "LINE":
+                total_edges += 1
+                total_vertices += 2
+
+            elif etype == "CIRCLE":
+                total_edges += 1
+                total_vertices += 1
+
+            elif etype == "ARC":
+                total_edges += 1
+                total_vertices += 2
+
+            elif etype == "LWPOLYLINE":
+                pts = [p for p in e.get_points() if len(p) >= 2]
+                if len(pts) >= 2:
+                    total_vertices += len(pts)
+                    if e.closed:
+                        total_edges += len(pts)
+                    else:
+                        total_edges += len(pts) - 1
+
+            elif etype == "POLYLINE":
+                pts = [v for v in e.vertices if hasattr(v, "dxf")]
+                if len(pts) >= 2:
+                    total_vertices += len(pts)
+                    if e.is_closed:
+                        total_edges += len(pts)
+                    else:
+                        total_edges += len(pts) - 1
+
+        except Exception as ex:
+            print(f"Error in {path}, entity {etype}: {ex}")
+
+    return total_edges, total_vertices
+
+# print(count_edges_and_vertices('10991360\\Geo (5).DXF'))
 
 def load_dxf_geometry(file_path):
-    """Extract 2D geometry from DXF file into Shapely objects."""
     doc = ezdxf.readfile(file_path)
     msp = doc.modelspace()
 
@@ -205,7 +238,6 @@ def load_dxf_geometry(file_path):
     return polygons, lines
 
 def plot_dxf(file_path):
-    """Plot the geometry using matplotlib."""
     polygons, lines = load_dxf_geometry(file_path)
 
     plt.figure(figsize=(8, 8))
@@ -227,3 +259,9 @@ def plot_dxf(file_path):
     plt.ylabel("Y")
     plt.grid(True)
     plt.show()
+
+
+# doc = ezdxf.readfile('10991360\\Geo (5).DXF')
+# msp = doc.modelspace()
+# entity_types = [e.dxftype() for e in msp]
+# print(entity_types)
